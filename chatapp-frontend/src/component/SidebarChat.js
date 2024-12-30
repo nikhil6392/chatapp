@@ -3,7 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import './SidebarChat.css'
 
 
-const SidebarChat = () => {
+const SidebarChat = ({contactName}) => {
     const [seen, setSeed] = useState("")
 
     useEffect(() => {
@@ -13,7 +13,7 @@ const SidebarChat = () => {
     <div className='sidebarChat'>
         <Avatar />
         <div className='sidebarChat_info'>
-            <h2>Room name</h2>
+            <h2>{contactName}</h2>
             <p>Last message...</p>
         </div>
 
