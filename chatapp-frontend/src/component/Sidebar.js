@@ -7,6 +7,8 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import profile from './assets/profile.jpg'
+import SidebarChat from './SidebarChat';
+
 
 const Sidebar = () => {
   return (
@@ -31,7 +33,11 @@ const Sidebar = () => {
                 <input placeholder='Search bar'  type= "text" />
             </div>
         </div>
-        <div className='sidebar_chats'></div>
+        <div className='sidebar_chats'>
+            <SidebarChat />
+            <SidebarChat />
+            <SidebarChat />
+        </div>
     </div>
   )
 }
