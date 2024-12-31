@@ -16,7 +16,10 @@ const Chat = () => {
     return (
         <div className='chat'>
             <div className='chat_header'>
-                <Avatar src={`https://api.dicebear.com/9.x/notionists/svg?${seed}`} />
+                <Avatar 
+                    src={`https://api.dicebear.com/9.x/notionists/svg?seed=${seed}`} 
+                    alt="avatar"
+                    />
                 <div className='chat_headerInfo'>
                     <h3>Room name</h3>
                     <p>last seen at ...</p>
