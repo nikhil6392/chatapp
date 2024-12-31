@@ -4,14 +4,14 @@ import './SidebarChat.css'
 
 
 const SidebarChat = ({contactName}) => {
-    const [seen, setSeed] = useState("")
+    const [seed, setSeed] = useState("")
 
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 5000))
     } , [])
   return (
     <div className='sidebarChat'>
-        <Avatar />
+        <Avatar src = {`https://api.dicebear.com/9.x/notionists/svg${seed}`} />
         <div className='sidebarChat_info'>
             <h2>{contactName}</h2>
             <p>Last message...</p>
