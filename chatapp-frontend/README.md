@@ -2,6 +2,9 @@
 # Objective
 The Objective of this app is to give users a nice and smooth and simple application for communicating with their friends.
 
+# Application 
+[Application Overview](./src/component/assets/application-sc.png)
+
 # Tech Stack
 - I have used react for developing the front-end with java-script.
 - For styling I have used simple CSS.
