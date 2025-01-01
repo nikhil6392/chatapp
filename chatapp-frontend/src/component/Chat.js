@@ -23,7 +23,7 @@ const Chat = () => {
                     alt="avatar"
                     />
                 <div className='chat_headerInfo'>
-                    <h3>Room name</h3>
+                    <h3>Sample Chat Room</h3>
                     <p>last seen at ...</p>
                 </div>
                 <div className='chat_headerRight'>
@@ -48,7 +48,7 @@ const Chat = () => {
                     </span>
                 </p>
                 <p className='chat_message chat_receiver'>
-                    <span className='chat_name'>Parag</span>
+                    <span className='chat_name'>Ritik</span>
                     this is a message back
                     <span className='chat_timestamp'>
                         {new Date().toUTCString()}
