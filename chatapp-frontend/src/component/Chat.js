@@ -5,6 +5,8 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import './Chat.css'
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import MicIcon from '@mui/icons-material/Mic';
 
 
 
@@ -60,7 +62,17 @@ const Chat = () => {
                     </span>
                 </p>
             </div>
-            <div className='chat_footer'></div>
+            <div className='chat_footer'>
+                <InsertEmoticonIcon />
+                <form >
+                    <input 
+                        placeholder='Send a message'
+                        type='text'>
+                    </input>
+                    <MicIcon />
+
+                </form>
+            </div>
 
         </div>
     )
