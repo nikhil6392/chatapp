@@ -1,16 +1,24 @@
-import express from 'express'
 import mongoose from 'mongoose'
 
-// App config
-const app = express()
-const port = process.env.PORT || 9000
+import config from './config/index.js'
+import app from './app.js'
 
-// Middleware
+(async() => {
+    try {
+        await mongoose.connect(config.MONGO_URI)
+        console.log("DB is connected")
 
-// DB config
+        app.on ('error', (err) => {
+            console.log("Error", err)
+            throw err
+        })
 
-// API Endpoints
-app.get("/",(req,res) => res.status(200).send("Hello Developer"))
-
-
-app.listen(port,()=> console.log(`Listening on localhost: ${port}`))
+        const onListening = () => {
+            console.log(`Listening on ${config.PORT}`)
+        }
+        app.listen(config.PORT,onListening)
+    } catch(error){
+        console.log("error", error)
+        throw error
+    }
+})()
