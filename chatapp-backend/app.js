@@ -6,13 +6,47 @@
  */
 
 import express from 'express'
+import Pusher from 'pusher'
 import Messages from './model/dbMessages.js'
+import mongoose from 'mongoose'
+import config from './config/index.js'
 
 // Initialize express app
 const app = express()
+app.use(express.json())
+
+const pusher = new Pusher({
+    app_id: config.app_id,
+    key:    config.app_key,
+    secret: config.secret,
+    cluster: "ap2",
+    useTLS: true
+})
 
 
 // API Endpoints
+
+// Changes for test
+const db = mongoose.connection
+db.once("open", () => {
+    console.log("Db is connected")
+    const msgCollection = db.collection("msgs")
+    const changeStream = msgCollection.watch()
+    changeStream.on('change', change => {
+        console.log("change")
+        if(change.operationType === "insert") {
+            const messageDetails = change.fullDocument
+            pusher.trigger("messages", "inserted", {
+                name: messageDetails.name,
+                message: messageDetails.message,
+                timestamp: messageDetails.timestamp,
+                received: messageDetails.received
+            })
+        } else {
+            console.log('Error triggering Pusher')
+        }
+    })
+})
 
 /**
  *  @route GET /
@@ -28,16 +62,16 @@ app.get("/",(req,res) => res.status(200).send("Hello developer"))
  * @param {object} res the response object
  * @returns {object} returns a message or error
  */
+app.post('/messages/new', async (req, res) => {
+    try {
+        const dbMessage = req.body;
+        const newMessage = await Messages.create(dbMessage);
+        res.status(201).send(newMessage);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
 
-app.post('/messages/new', (req,res) => {
-    const dbMessage = req.body
-    Messages.create(dbMessage, (err, data) => {
-        if(err)
-            res.status(500).send(err)
-        else
-            res.status(201).send(data)
-    })
-})
 
 /**
  * @route GET /messages/sync
@@ -47,13 +81,16 @@ app.post('/messages/new', (req,res) => {
  * @param {object} res the response object
  * @returns {object} returns messages or error
  */
-app.get('/messages/sync', (req,res) => {
-    Messages.find((err, data) => {
-        if(err)
-            res.status(500).send(err)
-        else
-            res.status(200).send(data)
-    })
+
+
+app.get('/messages/sync', async(req,res) => {
+    try{
+        const data = await Messages.find()
+        res.status(200).json(data)
+    } catch(err) {
+        res.status(500).send(err)
+    }
+    
 })
 
 export default app;
