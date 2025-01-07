@@ -6,4 +6,4 @@ const msgSchema = mongoose.Schema({
     received: Boolean
 })
 
-export default mongoose.model('msgschemas', msgSchema)
+export default mongoose.model('messagecollections', msgSchema)
