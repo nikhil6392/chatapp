@@ -2,12 +2,16 @@
   "name": "chatapp-frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy":"http://localhost:9000",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.3.0",
     "@mui/material": "^6.3.0",
+    "axios": "^1.7.9",
     "cra-template": "1.2.0",
+    "dotenv": "^16.4.7",
+    "pusher-js": "^8.4.0-rc2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1"

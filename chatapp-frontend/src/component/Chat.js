@@ -7,11 +7,23 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import './Chat.css'
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import MicIcon from '@mui/icons-material/Mic';
+import axios from 'axios';
 
 
 
 const Chat = ({ messages}) => {
     const [seed, setSeed] = useState("")
+    const [input, setInput] = useState("")
+    const sendMessage = async (e) => {
+        e.preventDefault()
+        await axios.post('/messages/new', {
+            message: input,
+            name: "thewebdev",
+            timestamp: new Date().toUTCString(),
+            received: true
+        })
+        setInput("")
+    }
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 5000))
     }, [])
@@ -41,10 +53,10 @@ const Chat = ({ messages}) => {
 
             <div className='chat_body'>
             {messages.map(message => (
-                <p className={`chat__message ${message.received && 'chat__receiver'}`}>
-                    <span className="chat__name">{message.name}</span>
+                <p className={`chat_message ${message.received && 'chat_receiver'}`}>
+                    <span className="chat_name">{message.name}</span>
                             {message.message}
-                    <span className="chat__timestamp">
+                    <span className="chat_timestamp">
                         {message.timestamp}
                     </span>
                 </p>
@@ -54,12 +66,14 @@ const Chat = ({ messages}) => {
                 <InsertEmoticonIcon />
                 <form >
                     <input 
-                        placeholder='Send a message'
-                        type='text'>
+                        value={input}
+                        onChange={e => setInput(e.target.value)}
+                        placeholder='Type a Message'
+                        type= 'text'>
                     </input>
-                    <MicIcon />
-
+                    <button onClick={sendMessage} type= "submit">Send a message</button>
                 </form>
+                <MicIcon />
             </div>
 
         </div>
