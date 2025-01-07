@@ -6,47 +6,23 @@
  */
 
 import express from 'express'
-import Pusher from 'pusher'
 import Messages from './model/dbMessages.js'
-import mongoose from 'mongoose'
+import cors from 'cors'
 import config from './config/index.js'
 
 // Initialize express app
 const app = express()
 app.use(express.json())
+app.use(cors())
 
-const pusher = new Pusher({
-    app_id: config.app_id,
-    key:    config.app_key,
-    secret: config.secret,
-    cluster: "ap2",
-    useTLS: true
-})
 
 
 // API Endpoints
 
 // Changes for test
-const db = mongoose.connection
-db.once("open", () => {
-    console.log("Db is connected")
-    const msgCollection = db.collection("msgs")
-    const changeStream = msgCollection.watch()
-    changeStream.on('change', change => {
-        console.log("change")
-        if(change.operationType === "insert") {
-            const messageDetails = change.fullDocument
-            pusher.trigger("messages", "inserted", {
-                name: messageDetails.name,
-                message: messageDetails.message,
-                timestamp: messageDetails.timestamp,
-                received: messageDetails.received
-            })
-        } else {
-            console.log('Error triggering Pusher')
-        }
-    })
-})
+
+
+
 
 /**
  *  @route GET /
